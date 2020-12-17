@@ -1,2 +1,2 @@
 <?php
-echo phpinfo();
+readfile("oppgave3.html");
