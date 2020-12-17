@@ -7,10 +7,27 @@ class EditUser extends LitElement {
     };
   }
 
+  updateUser(e) {
+    var formdata = new FormData(e.target);
+
+    fetch("api/updateUser.php", {
+      method: "POST",
+      body: formdata
+    }).then(res => res.json())
+      .then((res) => {
+        if (res.status == 'success')
+          window.location.reload();
+        else
+          console.log("Update failed");
+      });
+
+    return e.preventDefault();
+  }
+
   render() {
     if (this.user.uid)
       return html`
-        <form action="api/updateUser.php" method="POST">
+        <form @submit="${(e) => this.updateUser(e)}" id="edit-user-form">
           <input type="hidden" name="uid" value="${this.user.uid}">
 
           <label for="firstName">First name</label>
